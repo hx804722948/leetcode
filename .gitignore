@@ -1,3 +1,13 @@
 .idea
 algorithms-java/out
 *.class
+# Custom directories
+.vs
+.idea/
+.vscode
+.DS_Store
+build*/
+.tasks
+
+# vcpkg 
+vcpkg.json
