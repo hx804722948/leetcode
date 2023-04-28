@@ -18,67 +18,81 @@
 *               
 **********************************************************************************/
 
-class Solution {
+#include <unordered_map>
+#include <vector>
+
+class Solution
+{
 public:
-    /*
-     *   The easy solution is O(n^2) run-time complexity.
-     *   ```
-     *       foreach(item1 in array) {
-     *           foreach(item2 in array){
-     *               if (item1 + item2 == target) {
-     *                   return result
-     *               }
-     *           }
-     *   ```
-     *   
-     *   We can see the nested loop just for searching, 
-     *   So, we can use a hashmap to reduce the searching time complexity from O(n) to O(1)
-     *   (the map's `key` is the number, the `value` is the position)
-     *   
-     *   But be careful, if there are duplication numbers in array, 
-     *   how the map store the positions for all of same numbers?
-     *
-     */
+	/*
+	 *   The easy solution is O(n^2) run-time complexity.
+	 *   ```
+	 *       foreach(item1 in array) {
+	 *           foreach(item2 in array){
+	 *               if (item1 + item2 == target) {
+	 *                   return result
+	 *               }
+	 *           }
+	 *   ```
+	 *   
+	 *   We can see the nested loop just for searching, 
+	 *   So, we can use a hashmap to reduce the searching time complexity from O(n) to O(1)
+	 *   (the map's `key` is the number, the `value` is the position)
+	 *   
+	 *   But be careful, if there are duplication numbers in array, 
+	 *   how the map store the positions for all of same numbers?
+	 *
+	 */
 
 
-    //
-    // The implementation as below is bit tricky. but not difficult to understand
-    //
-    //  1) Traverse the array one by one
-    //  2) just put the `target - num[i]`(not `num[i]`) into the map
-    //     so, when we checking the next num[i], if we found it existed in the map,
-    //     it means we found the second one.
-    //      
-    vector<int> twoSum(vector<int> &numbers, int target) {
-        unordered_map<int, int> m;
-        vector<int> result;
-        for(int i=0; i<numbers.size(); i++){
-            // not found the second one
-            if (m.find(numbers[i])==m.end() ) { 
-                // store the first one position into the second one's key
-                m[target - numbers[i]] = i; 
-            }else { 
-                // found the second one
-                result.push_back(m[numbers[i]]+1);
-                result.push_back(i+1);
-                break;
-            }
-        }
-        return result;
-    }
+	//
+	// The implementation as below is bit tricky. but not difficult to understand
+	//
+	//  1) Traverse the array one by one
+	//  2) just put the `target - num[i]`(not `num[i]`) into the map
+	//     so, when we checking the next num[i], if we found it existed in the map,
+	//     it means we found the second one.
+	//      
+	std::vector<int> twoSum(std::vector<int>& numbers, int target)
+	{
+		std::unordered_map<int, int> m;
+		std::vector<int> result;
+		for (int i = 0; i < numbers.size(); i++)
+		{
+			// not found the second one
+			if (m.find(numbers[i]) == m.end())
+			{
+				// store the first one position into the second one's key
+				m[target - numbers[i]] = i;
+			}
+			else
+			{
+				// found the second one
+				result.push_back(m[numbers[i]]);
+				result.push_back(i);
+				break;
+			}
+		}
+		return result;
+	}
 
-    // we also can store nums[i] into map, and find target - nums[i]
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> m;
-        vector<int> result;
-        for (int i=0; i<nums.size(); i++) {
-            if ( m.find(target - nums[i]) == m.end() ) {
-                m[nums[i]] = i;
-            }else{
-                result.push_back(m[target - nums[i]]);
-                result.push_back(i);
-            }
-        }
-        return result;
-    }
+	// we also can store nums[i] into map, and find target - nums[i]
+	std::vector<int> twoSum2(std::vector<int>& nums, int target)
+	{
+		std::unordered_map<int, int> m;
+		std::vector<int> result;
+		for (int i = 0; i < nums.size(); i++)
+		{
+			if (m.find(target - nums[i]) == m.end())
+			{
+				m[nums[i]] = i;
+			}
+			else
+			{
+				result.push_back(m[target - nums[i]]);
+				result.push_back(i);
+			}
+		}
+		return result;
+	}
 };
